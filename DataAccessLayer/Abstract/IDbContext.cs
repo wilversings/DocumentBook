@@ -9,9 +9,11 @@ using System.Threading.Tasks;
 namespace DataAccessLayer.Abstract {
     public interface IDbContext {
 
-        DbSet<Document> Documents { get; set; }
         int SaveChanges ();
         Task<int> SaveChangesAsync ();
+
+        DbSet<Document> Documents { get; }
+        DbSet<Post> Posts { get; }
 
     }
 }

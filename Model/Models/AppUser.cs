@@ -7,5 +7,8 @@ using System.Threading.Tasks;
 
 namespace Model.Models {
     public class AppUser : IdentityUser {
+
+        public byte[] ProfilePicture { get; set; }
+
     }
 }

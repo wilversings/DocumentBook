@@ -7,18 +7,22 @@ using System.Threading.Tasks;
 using Model.Models;
 using DataAccessLayer.Abstract;
 using Microsoft.AspNet.Identity.EntityFramework;
+using Model.Models;
 
 namespace DataAccessLayer.Concrete {
     public class AppDbContext : IdentityDbContext<AppUser>, IDbContext {
 
         public AppDbContext () : base("DefaultSchema") { }
-        public DbSet<Document> Documents { get; set; }
         static AppDbContext() {
             Database.SetInitializer<AppDbContext> (new IdentityDbInit ());
         } 
         public static AppDbContext Create() {
             return new AppDbContext ();
         }
+
+        public DbSet<Post> Posts { get; }
+        public DbSet<Document> Documents { get; set; }
+
 
     }
 

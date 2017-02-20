@@ -32,3 +32,4 @@ C:\Users\maiordachioaei\documents\visual studio 2015\Projects\DocumentBook\DataA
 C:\Users\maiordachioaei\documents\visual studio 2015\Projects\DocumentBook\DataAccessLayer\obj\Debug\DataAccessLayer.Migrations.AddUsers.resources
 C:\Users\maiordachioaei\documents\visual studio 2015\Projects\DocumentBook\DataAccessLayer\bin\Debug\Microsoft.Owin.Host.SystemWeb.dll
 C:\Users\maiordachioaei\documents\visual studio 2015\Projects\DocumentBook\DataAccessLayer\bin\Debug\Microsoft.Owin.Host.SystemWeb.xml
+C:\Users\maiordachioaei\documents\visual studio 2015\Projects\DocumentBook\DataAccessLayer\obj\Debug\DataAccessLayer.Migrations.AddPostAndProfilePicture.resources
