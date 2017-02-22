@@ -46,7 +46,8 @@ namespace BusinessLayer.Concrete {
         public IEnumerable<string> Register (string username, string password, byte[] profilePicture) {
             var identityResult = UserManager.CreateAsync (new Model.Models.AppUser {
                 UserName = username,
-                ProfilePicture = profilePicture
+                ProfilePicture = profilePicture,
+                CreateTimestamp = DateTime.Now
             }, password).Result;
             return identityResult.Errors;
         }
@@ -54,7 +55,8 @@ namespace BusinessLayer.Concrete {
         public async Task<IEnumerable<string>> RegisterAsync (string username, string password, byte[] profilePicture) {
             return (await UserManager.CreateAsync (new Model.Models.AppUser {
                 UserName = username,
-                ProfilePicture = profilePicture
+                ProfilePicture = profilePicture,
+                CreateTimestamp = DateTime.Now
             }, password)).Errors;
         }
 

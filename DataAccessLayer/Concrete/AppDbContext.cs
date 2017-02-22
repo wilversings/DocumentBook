@@ -20,6 +20,7 @@ namespace DataAccessLayer.Concrete {
         }
 
         public IDbSet<Post> Posts { get; set; }
+        public IDbSet<File> Files { get; set; }
 
 
     }

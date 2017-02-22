@@ -2,25 +2,25 @@
 
 <div class="row" style="margin-top:15px">
 
-    <div class="col-md-1">
-        <img src="/Home/ProfilePicture/?username=@Model.Author.UserName" class="img-responsive img-rounded"/>
+    <div class="col-md-1" style="padding:0">
+        <img src="/Home/ProfilePicture/?username=@Model.Author.UserName" class="img-responsive img-circle"/>
     </div>
     <div class="col-md-11">
-        <h5 style="font-weight:bold">@Model.Author.UserName</h5>
+        <h5 style="font-weight:bold;margin-bottom:0">@Model.Author.UserName</h5>
         <p style="color:gray">@@ @Model.CreateTimestamp</p>
     </div>
 
 </div>
 @if(Model.Attachment != null) {
     <div class="row" style="margin:10px 0">
-    <div class="col-md-11 col-md-offset-1">
+    <div class="col-md-11 col-md-offset-1" style="padding:0">
 
-        <div class="col-md-7">
+        <div class="col-md-7" style="padding:0">
             <span class="glyphicon glyphicon-file"></span>
-            <span style="font-weight:bold"> FILENAME </span>
+            <span style="font-weight:bold"> @Model.Attachment.FileName </span>
         </div>
         <div class="col-md-5">
-            <button class="btn btn-default btn-xs"><span class="glyphicon glyphicon-download"></span> Download</button>
+            <a href="@Url.Action("Download", "Home", new { Model.Id })"><button class="btn btn-default btn-xs"><span class="glyphicon glyphicon-download"></span> Download</button></a>
             <button class="btn btn-default btn-xs"><span class="glyphicon glyphicon-eye-open"></span> Preview</button>
         </div>
     </div>

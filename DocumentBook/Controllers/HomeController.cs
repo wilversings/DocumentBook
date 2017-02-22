@@ -53,10 +53,33 @@ namespace Mvc.Controllers {
                 return new HttpStatusCodeResult (System.Net.HttpStatusCode.BadRequest);
             }
             model.Post.CreateTimestamp = DateTime.Now;
-            model.Post.Attachment = null; //for now
+
+            var att = (model.Attachment as HttpPostedFileBase[])[0];
+            if (att != null) {
+                var contentBuffer = new byte[att.ContentLength];
+                att.InputStream.Read (contentBuffer, 0, att.ContentLength);
+                var newFile = new File {
+                    MimeType = att.ContentType,
+                    FileName = att.FileName,
+                    Content = contentBuffer
+                };
+                model.Post.Attachment = newFile;
+                DbContext.Files.Add (newFile);
+            }
+            else {
+                model.Post.Attachment = null;
+            }
+
             DbContext.Posts.Add (model.Post);
             DbContext.SaveChanges ();
             return Redirect ("/");
+
+        }
+
+        public ActionResult Download(int id) {
+
+            var att = DbContext.Posts.FirstOrDefault (p => p.Id == id).Attachment;
+            return File (att.Content, att.MimeType, att.FileName);
 
         }
 

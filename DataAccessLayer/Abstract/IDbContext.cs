@@ -14,6 +14,7 @@ namespace DataAccessLayer.Abstract {
 
         IDbSet<Post> Posts { get; }
         IDbSet<AppUser> Users { get; }
+        IDbSet<File> Files { get; }
 
     }
 }
