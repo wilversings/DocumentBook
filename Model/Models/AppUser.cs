@@ -10,5 +10,7 @@ namespace Model.Models {
 
         public byte[] ProfilePicture { get; set; }
 
+        public DateTime CreateTimestamp { get; set; }
+
     }
 }

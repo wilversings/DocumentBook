@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using Model.Models;
 using DataAccessLayer.Abstract;
 using Microsoft.AspNet.Identity.EntityFramework;
-using Model.Models;
 
 namespace DataAccessLayer.Concrete {
     public class AppDbContext : IdentityDbContext<AppUser>, IDbContext {
@@ -20,8 +19,7 @@ namespace DataAccessLayer.Concrete {
             return new AppDbContext ();
         }
 
-        public DbSet<Post> Posts { get; }
-        public DbSet<Document> Documents { get; set; }
+        public IDbSet<Post> Posts { get; set; }
 
 
     }

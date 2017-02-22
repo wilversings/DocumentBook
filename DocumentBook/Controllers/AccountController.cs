@@ -35,14 +35,26 @@ namespace DocumentBook.Controllers
 
         [HttpPost]
         public async Task<ActionResult> Register (RegisterViewModel model) {
-            if (ModelState.IsValid) {
-                var errors = await AuthProvider.RegisterAsync (model.Email, model.Password);
-                foreach(string err in errors) {
-                    ModelState.AddModelError ("", err);
-                }
-                return View ();
+            if (!ModelState.IsValid) {
+                return View (model);
             }
-            return View (model);
+
+            byte[] profilePictureBuffer;
+            if (model.ProfilePicture != null) {
+                var File = (model.ProfilePicture as HttpPostedFileBase[])[0];
+                profilePictureBuffer = new byte[File.ContentLength];
+                File.InputStream.Read (profilePictureBuffer, 0, File.ContentLength);
+            } else {
+                profilePictureBuffer = new byte[0];
+            }
+
+            // TODO validate File.ContentType
+
+            var errors = await AuthProvider.RegisterAsync (model.Email, model.Password, profilePictureBuffer);
+            foreach(string err in errors) {
+                ModelState.AddModelError ("", err);
+            }
+            return View ();
         }
 
         public ActionResult Login(string redirectUrl) {

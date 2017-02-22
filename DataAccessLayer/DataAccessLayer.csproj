@@ -89,13 +89,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Abstract\CrudRepository.cs" />
+    <Compile Include="Abstract\FakeDbSet.cs" />
     <Compile Include="Abstract\IDbContext.cs" />
-    <Compile Include="Abstract\AbstractPostRepository.cs" />
     <Compile Include="Concrete\AppDbContext.cs" />
     <Compile Include="Concrete\AppUserManager.cs" />
     <Compile Include="Concrete\IdentityConfig.cs" />
-    <Compile Include="Concrete\PostRepository.cs" />
     <Compile Include="Migrations\201702170857015_AddedUserAccounts.cs" />
     <Compile Include="Migrations\201702170857015_AddedUserAccounts.Designer.cs">
       <DependentUpon>201702170857015_AddedUserAccounts.cs</DependentUpon>
@@ -107,6 +105,18 @@
     <Compile Include="Migrations\201702201313342_AddPostAndProfilePicture.cs" />
     <Compile Include="Migrations\201702201313342_AddPostAndProfilePicture.Designer.cs">
       <DependentUpon>201702201313342_AddPostAndProfilePicture.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201702211131354_RemoveDocuments.cs" />
+    <Compile Include="Migrations\201702211131354_RemoveDocuments.Designer.cs">
+      <DependentUpon>201702211131354_RemoveDocuments.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201702221257062_AddTimestamp.cs" />
+    <Compile Include="Migrations\201702221257062_AddTimestamp.Designer.cs">
+      <DependentUpon>201702221257062_AddTimestamp.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201702221337238_AddFile.cs" />
+    <Compile Include="Migrations\201702221337238_AddFile.Designer.cs">
+      <DependentUpon>201702221337238_AddFile.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -131,6 +141,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201702201313342_AddPostAndProfilePicture.resx">
       <DependentUpon>201702201313342_AddPostAndProfilePicture.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702211131354_RemoveDocuments.resx">
+      <DependentUpon>201702211131354_RemoveDocuments.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702221257062_AddTimestamp.resx">
+      <DependentUpon>201702221257062_AddTimestamp.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702221337238_AddFile.resx">
+      <DependentUpon>201702221337238_AddFile.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

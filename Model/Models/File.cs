@@ -6,14 +6,13 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Model.Models {
-    public class Post {
+    public class File {
 
         [Key]
         public int Id { get; set; }
-        public virtual AppUser Author { get; set; }
-        public string Body { get; set; }
-        public virtual File Attachment { get; set; }
-        public DateTime CreateTimestamp { get; set; }
+        public string FileName { get; set; }
+        public string MimeType { get; set; }
+        public byte[] Content { get; set; }
 
     }
 }

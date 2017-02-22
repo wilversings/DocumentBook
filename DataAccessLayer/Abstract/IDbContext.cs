@@ -12,8 +12,8 @@ namespace DataAccessLayer.Abstract {
         int SaveChanges ();
         Task<int> SaveChangesAsync ();
 
-        DbSet<Document> Documents { get; }
-        DbSet<Post> Posts { get; }
+        IDbSet<Post> Posts { get; }
+        IDbSet<AppUser> Users { get; }
 
     }
 }

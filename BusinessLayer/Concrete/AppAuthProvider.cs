@@ -43,16 +43,18 @@ namespace BusinessLayer.Concrete {
             return true;
         }
 
-        public IEnumerable<string> Register (string username, string password) {
+        public IEnumerable<string> Register (string username, string password, byte[] profilePicture) {
             var identityResult = UserManager.CreateAsync (new Model.Models.AppUser {
-                UserName = username
+                UserName = username,
+                ProfilePicture = profilePicture
             }, password).Result;
             return identityResult.Errors;
         }
 
-        public async Task<IEnumerable<string>> RegisterAsync (string username, string password) {
+        public async Task<IEnumerable<string>> RegisterAsync (string username, string password, byte[] profilePicture) {
             return (await UserManager.CreateAsync (new Model.Models.AppUser {
-                UserName = username
+                UserName = username,
+                ProfilePicture = profilePicture
             }, password)).Errors;
         }
 

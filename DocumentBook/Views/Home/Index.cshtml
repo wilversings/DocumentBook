@@ -1,8 +1,41 @@
-﻿@using Microsoft.AspNet.Identity
+﻿@using Model.Models;
+@model Model.ViewModels.HomeViewModel
 @{
     ViewBag.Title = "Home Page";
 }
+<div class="container" style="margin-top:50px">
+<div class="row"><div class="col-md-6 col-md-offset-3">
+    @using (Html.BeginForm ("Post", "Home", FormMethod.Post)) {
+        <fieldset @(!Request.IsAuthenticated ? "disabled" : "")>
+        @Html.AntiForgeryToken()
 
-<div class="row">
+        <div class="row">
+            <div class="col-md-2">
+                @if (Request.IsAuthenticated) {
+                    <img src="/Home/ProfilePicture/?username=@HttpUtility.UrlEncode(User.Identity.Name)" class="img-responsive img-circle" />
+                }
+            </div>
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model.Post.Body, new { @class = "form-control", style = "min-width:100%; resize:none; min-height: 100px",
+                 placeholder = Request.IsAuthenticated ? "Write what comes to your mind..." : "Login to write posts!"})
+            </div>
+        </div>
+        <div class="row" style="margin-top: 15px">
+            <div class="col-md-2 col-md-offset-2">
+                <input type="file" />
+            </div>
+            <div class="col-md-2 col-md-offset-6">
+                <input type="submit" class="btn btn-default btn-sm" value="Post" style="width:100%"/>
+            </div>
+        </div>
+        </fieldset>
 
+    }
+    <br />
+    @foreach (Post post in Model.Posts) {
+        @Html.Partial("_Post", post)
+    }
+
+
+</div></div>
 </div>
