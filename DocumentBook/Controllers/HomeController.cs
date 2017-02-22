@@ -82,6 +82,10 @@ namespace Mvc.Controllers {
             return File (att.Content, att.MimeType, att.FileName);
 
         }
+        public ActionResult Preview(int id) {
+            var att = DbContext.Posts.FirstOrDefault (p => p.Id == id).Attachment;
+            return new FileContentResult(att.Content, att.MimeType);
+        }
 
     }
 }
