@@ -49,6 +49,17 @@ namespace BusinessLayer.Concrete {
             return true;
         }
 
+        public IEnumerable<string> Register (string username, string password, HttpPostedFileBase profilePicture) {
+            byte[] profilePictureBuffer;
+            if (profilePicture != null) {
+                profilePictureBuffer = new byte[profilePicture.ContentLength];
+                profilePicture.InputStream.Read (profilePictureBuffer, 0, profilePicture.ContentLength);
+            }
+            else {
+                profilePictureBuffer = new byte[0];
+            }
+            return this.Register (username, password, profilePictureBuffer);
+        }
         public IEnumerable<string> Register (string username, string password, byte[] profilePicture) {
             var identityResult = UserManager.CreateAsync (new Model.Models.AppUser {
                 UserName = username,
@@ -73,7 +84,7 @@ namespace BusinessLayer.Concrete {
             if (user.ProfilePicture != null) {
                 return user.ProfilePicture;
             }
-            // TODO return default profile picture
+            // Return default profile picture
             return null;
         }
 

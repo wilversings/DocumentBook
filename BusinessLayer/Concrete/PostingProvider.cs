@@ -17,6 +17,9 @@ namespace BusinessLayer.Concrete {
         }
 
         public File CreateFile (HttpPostedFileBase file, bool sync = false) {
+            if (file == null) {
+                return null;
+            }
             byte[] content = new byte[file.ContentLength];
             file.InputStream.Read (content, 0, file.ContentLength);
             return this.CreateFile (file.FileName, file.ContentType, content, sync);

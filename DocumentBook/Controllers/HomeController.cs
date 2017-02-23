@@ -50,7 +50,9 @@ namespace Mvc.Controllers {
             if (User.Identity.GetUserId() != post.Author.Id) {
                 return new HttpStatusCodeResult (System.Net.HttpStatusCode.Forbidden);
             }
-            DbContext.Files.Remove (post.Attachment);
+            if (post.Attachment != null) {
+                DbContext.Files.Remove (post.Attachment);
+            }
             var deletedPost = DbContext.Posts.Remove (post);
             DbContext.SaveChanges ();
             

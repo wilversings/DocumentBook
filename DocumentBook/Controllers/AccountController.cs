@@ -33,23 +33,23 @@ namespace DocumentBook.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Register (RegisterViewModel model) {
+        public ActionResult Register (RegisterViewModel model) {
             if (!ModelState.IsValid) {
                 return View (model);
             }
 
-            byte[] profilePictureBuffer;
+            /*byte[] profilePictureBuffer;
             if (model.ProfilePicture != null) {
                 var File = (model.ProfilePicture as HttpPostedFileBase[])[0];
                 profilePictureBuffer = new byte[File.ContentLength];
                 File.InputStream.Read (profilePictureBuffer, 0, File.ContentLength);
             } else {
                 profilePictureBuffer = new byte[0];
-            }
+            }*/
 
             // TODO validate File.ContentType
 
-            var errors = await AuthProvider.RegisterAsync (model.Email, model.Password, profilePictureBuffer);
+            var errors = AuthProvider.Register (model.Email, model.Password, (model.ProfilePicture as HttpPostedFileBase[])[0]);
             foreach(string err in errors) {
                 ModelState.AddModelError ("", err);
             }
@@ -73,7 +73,7 @@ namespace DocumentBook.Controllers
             return View (viewModel);
         }
 
-        [HttpPost]
+        [HttpPost, Authorize]
         public ActionResult Logout () {
             AuthProvider.Logout ();
             return Redirect ("/");
