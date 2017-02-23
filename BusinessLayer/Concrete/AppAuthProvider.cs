@@ -11,9 +11,15 @@ using DataAccessLayer.Concrete;
 using Microsoft.AspNet.Identity;
 using System.Security.Claims;
 using Microsoft.Owin.Security;
+using DataAccessLayer.Abstract;
 
 namespace BusinessLayer.Concrete {
     public class AppAuthProvider : IAuthProvider {
+
+        readonly IDbContext DbContext;
+        public AppAuthProvider (IDbContext dbContext) {
+            DbContext = dbContext;
+        }
 
         private AppUserManager UserManager
         {
@@ -58,6 +64,17 @@ namespace BusinessLayer.Concrete {
                 ProfilePicture = profilePicture,
                 CreateTimestamp = DateTime.Now
             }, password)).Errors;
+        }
+
+        public byte[] ProfilePicture (string username) {
+            var user = DbContext.Users.FirstOrDefault (u => u.UserName == username);
+            if (user == null)
+                return null;
+            if (user.ProfilePicture != null) {
+                return user.ProfilePicture;
+            }
+            // TODO return default profile picture
+            return null;
         }
 
         public void Logout () {

@@ -16,10 +16,12 @@ namespace Mvc.Controllers {
 
         readonly IPostingProvider PostingProvider;
         readonly IDbContext DbContext;
+        readonly IAuthProvider AuthProvider;
 
-        public HomeController (IPostingProvider postingProvider, IDbContext dbContext) {
+        public HomeController (IPostingProvider postingProvider, IDbContext dbContext, IAuthProvider authProvider) {
             PostingProvider = postingProvider;
             DbContext = dbContext;
+            AuthProvider = authProvider;
         }
 
         public ActionResult Index () {
@@ -31,14 +33,11 @@ namespace Mvc.Controllers {
         }
 
         public ActionResult ProfilePicture(string username) {
-            var user = DbContext.Users.FirstOrDefault (u => u.UserName == username);
-            if (user == null) {
+            var pic = AuthProvider.ProfilePicture (username);
+            if (pic == null) {
                 return new HttpStatusCodeResult (System.Net.HttpStatusCode.NotFound);
             }
-            if (user.ProfilePicture.Length != 0)
-                return File (user.ProfilePicture, "image");
-            // TODO Handle default profile picture
-            return null;
+            return File (pic, "image");
         }
 
         [HttpDelete]
