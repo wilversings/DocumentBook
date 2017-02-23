@@ -14,7 +14,7 @@
 @if (Model.Attachment != null) {
 
     <div id="preview-modal-@Model.Id" class="modal fade" role="dialog">
-        <div class="modal-dialog">
+        <div class="modal-dialog" style="width:900px">
 
             <div class="modal-content">
                 <div class="modal-header">
@@ -22,7 +22,7 @@
                     <h4 class="modal-title">@Model.Attachment.FileName</h4>
                 </div>
                 <div class="modal-body">
-                    <iframe id="preview-iframe-@Model.Id" style="width:100%;height:650px"></iframe>
+                    <iframe id="preview-iframe-@Model.Id" style="height:650px;width:100%"></iframe>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -40,8 +40,16 @@
             <span style="font-weight:bold"> @Model.Attachment.FileName </span>
         </div>
         <div class="col-md-5">
-            <a href="@Url.Action("Download", "Home", new { Model.Id })"><button class="btn btn-default btn-xs"><span class="glyphicon glyphicon-download"></span> Download</button></a>
-            <button onclick="document.getElementById('preview-iframe-@Model.Id').src='@Url.Action("Preview","Home", new { Model.Id })'" type="button" data-toggle="modal" data-target="#preview-modal-@Model.Id" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-eye-open"></span> Preview</button>
+            <a href="@Url.Action("Download", "Home", new { Model.Id })">
+                <button class="btn btn-default btn-xs"><span class="glyphicon glyphicon-download"></span> Download</button>
+            </a>
+            <button onclick="document.getElementById('preview-iframe-@Model.Id').src='@Url.Action("Preview","Home", new { Model.Id })'" 
+                    type="button" 
+                    data-toggle="modal" 
+                    data-target="#preview-modal-@Model.Id" 
+                    class="btn btn-default btn-xs">
+                <span class="glyphicon glyphicon-eye-open"></span> Preview
+            </button>
         </div>
     </div>
     </div>

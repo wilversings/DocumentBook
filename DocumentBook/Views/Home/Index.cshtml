@@ -17,7 +17,7 @@
             </div>
             <div class="col-md-10">
                 @Html.TextAreaFor(model => model.Post.Body, new { @class = "form-control", style = "min-width:100%; resize:none; min-height: 100px",
-                 placeholder = Request.IsAuthenticated ? "Write what comes to your mind..." : "Login to write posts!"})
+                 placeholder = Request.IsAuthenticated ? "What's on your mind?" : "Please login to write posts!"})
             </div>
         </div>
         <div class="row" style="margin-top: 15px">
@@ -33,7 +33,7 @@
     }
     <br />
     @foreach (Post post in Model.Posts) {
-        @Html.Partial("_Post", post)
+        @Html.Partial("Post", post)
     }
 
 

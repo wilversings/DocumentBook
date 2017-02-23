@@ -257,7 +257,7 @@
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Shared\_AuthPartial.cshtml" />
-    <Content Include="Views\Shared\_Post.cshtml" />
+    <Content Include="Views\Shared\Post.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
