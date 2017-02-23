@@ -14,8 +14,7 @@ namespace DocumentBook.Controllers
 {
     public class AccountController : Controller
     {
-
-        private IAuthProvider AuthProvider { get; set; }
+        readonly IAuthProvider AuthProvider;
 
         public AccountController (IAuthProvider authProvider) {
             this.AuthProvider = authProvider;

@@ -92,7 +92,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Abstract\IAuthProvider.cs" />
+    <Compile Include="Abstract\IPostingProvider.cs" />
     <Compile Include="Concrete\AppAuthProvider.cs" />
+    <Compile Include="Concrete\PostingProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

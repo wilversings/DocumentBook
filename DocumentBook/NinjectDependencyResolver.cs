@@ -20,7 +20,11 @@ namespace DocumentBook {
         }
 
         public void SetBindings() {
+
+            // Business layer bindings
             this.Kernel.Bind<IAuthProvider> ().To<AppAuthProvider> ();
+            this.Kernel.Bind<IPostingProvider> ().To<PostingProvider> ();
+
             this.Kernel.Bind<IDbContext> ().To<AppDbContext> ();
         }
 

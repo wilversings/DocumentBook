@@ -5,16 +5,20 @@ using System.Web;
 using System.Web.Mvc;
 using DataAccessLayer.Concrete;
 using Microsoft.AspNet.Identity;
-using DataAccessLayer.Abstract;
 using Model.ViewModels;
 using System.Data.Entity;
 using Model.Models;
+using BusinessLayer.Abstract;
+using DataAccessLayer.Abstract;
 
 namespace Mvc.Controllers {
     public class HomeController : Controller {
 
-        IDbContext DbContext { get; set; }
-        public HomeController (IDbContext dbContext) {
+        readonly IPostingProvider PostingProvider;
+        readonly IDbContext DbContext;
+
+        public HomeController (IPostingProvider postingProvider, IDbContext dbContext) {
+            PostingProvider = postingProvider;
             DbContext = dbContext;
         }
 
@@ -33,6 +37,7 @@ namespace Mvc.Controllers {
             }
             if (user.ProfilePicture.Length != 0)
                 return File (user.ProfilePicture, "image");
+            // TODO Handle default profile picture
             return null;
         }
 
@@ -47,31 +52,12 @@ namespace Mvc.Controllers {
             if (!ModelState.IsValid) {
                 return new HttpStatusCodeResult (System.Net.HttpStatusCode.BadRequest);
             }
-            var username = User.Identity.Name;
-            model.Post.Author = DbContext.Users.FirstOrDefault (u => u.UserName == username);
-            if (model.Post.Author == null) {
-                return new HttpStatusCodeResult (System.Net.HttpStatusCode.BadRequest);
-            }
-            model.Post.CreateTimestamp = DateTime.Now;
-
-            var att = (model.Attachment as HttpPostedFileBase[])[0];
-            if (att != null) {
-                var contentBuffer = new byte[att.ContentLength];
-                att.InputStream.Read (contentBuffer, 0, att.ContentLength);
-                var newFile = new File {
-                    MimeType = att.ContentType,
-                    FileName = att.FileName,
-                    Content = contentBuffer
-                };
-                model.Post.Attachment = newFile;
-                DbContext.Files.Add (newFile);
-            }
-            else {
-                model.Post.Attachment = null;
-            }
-
-            DbContext.Posts.Add (model.Post);
-            DbContext.SaveChanges ();
+            PostingProvider.CreatePost (
+                authorId:   User.Identity.GetUserId (),
+                body:       model.Post.Body,
+                attachment: PostingProvider.CreateFile ((model.Attachment as HttpPostedFileBase[])[0]),
+                sync:       true
+            );
             return Redirect ("/");
 
         }
