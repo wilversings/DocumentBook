@@ -1,14 +1,24 @@
 ﻿@model Model.Models.Post
+@using Microsoft.AspNet.Identity;
 
 <div class="row" style="margin-top:15px">
 
     <div class="col-md-1" style="padding:0">
         <img src="/Home/ProfilePicture/?username=@Model.Author.UserName" class="img-responsive img-circle"/>
     </div>
-    <div class="col-md-11">
+    <div class="col-md-10">
         <h5 style="font-weight:bold;margin-bottom:0">@Model.Author.UserName</h5>
         <p style="color:gray">@@ @Model.CreateTimestamp</p>
     </div>
+    @if (Model.Author.Id == User.Identity.GetUserId ()) {
+        <div class="col-md-1">
+            @using(Html.BeginForm ("DeletePost/" + Model.Id, "Home", FormMethod.Post)) {
+                @Html.HttpMethodOverride(HttpVerbs.Delete)
+                <span onclick="this.parentElement.submit()" class="glyphicon glyphicon-remove" style="cursor:pointer">
+                </span>
+            }
+        </div>
+    }
 
 </div>
 @if (Model.Attachment != null) {

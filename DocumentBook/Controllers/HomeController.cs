@@ -40,9 +40,22 @@ namespace Mvc.Controllers {
             return File (pic, "image");
         }
 
-        [HttpDelete]
+        [HttpDelete, Authorize]
         public ActionResult DeletePost(int id) {
-            return View ();
+
+            var post = DbContext.Posts.FirstOrDefault (p => p.Id == id);
+            if (post == null) {
+                return new HttpStatusCodeResult (System.Net.HttpStatusCode.NotFound);
+            }
+            if (User.Identity.GetUserId() != post.Author.Id) {
+                return new HttpStatusCodeResult (System.Net.HttpStatusCode.Forbidden);
+            }
+            DbContext.Files.Remove (post.Attachment);
+            var deletedPost = DbContext.Posts.Remove (post);
+            DbContext.SaveChanges ();
+            
+            return Redirect ("/");
+
         }
 
         [HttpPost, Authorize]

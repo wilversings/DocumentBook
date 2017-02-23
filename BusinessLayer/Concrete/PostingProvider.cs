@@ -29,8 +29,8 @@ namespace BusinessLayer.Concrete {
                 MimeType = mimeType
             };
 
-            DbContext.Files.Add (newFile);
             if (sync) {
+                DbContext.Files.Add (newFile);
                 DbContext.SaveChanges ();
             }
             return newFile;
@@ -44,11 +44,12 @@ namespace BusinessLayer.Concrete {
                 Attachment = attachment
             };
 
-            DbContext.Posts.Add (newPost);
             if (sync) {
+                DbContext.Posts.Add (newPost);
                 DbContext.SaveChanges ();
             }
             return newPost;
         }
+
     }
 }
