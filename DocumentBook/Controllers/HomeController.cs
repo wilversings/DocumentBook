@@ -28,7 +28,7 @@ namespace Mvc.Controllers {
             string uid = User.Identity.GetUserId ();
             return View (new HomeViewModel {
                 CurrentUser = DbContext.Users.FirstOrDefault (u => u.Id == uid),
-                Posts = (DbContext.Posts as DbSet<Post>).Include("Author")
+                Posts = DbContext.Posts
             });
         }
 
@@ -60,7 +60,7 @@ namespace Mvc.Controllers {
 
         }
 
-        [HttpPost, Authorize]
+        [HttpPost, Authorize, DocumentBook.Filters.FileTooBigException]
         public ActionResult Post(HomeViewModel model) {
             
             if (!ModelState.IsValid) {
@@ -77,10 +77,8 @@ namespace Mvc.Controllers {
         }
 
         public ActionResult Download(int id) {
-
             var att = DbContext.Posts.FirstOrDefault (p => p.Id == id).Attachment;
             return File (att.Content, att.MimeType, att.FileName);
-
         }
         public ActionResult Preview(int id) {
             var att = DbContext.Posts.FirstOrDefault (p => p.Id == id).Attachment;

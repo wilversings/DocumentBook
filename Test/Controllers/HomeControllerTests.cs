@@ -11,6 +11,8 @@ using Model.Models;
 using System.Data.Entity;
 using System.Web.Mvc;
 using System.Net;
+using BusinessLayer.Abstract;
+using System.Web;
 
 namespace Mvc.Controllers.Tests {
     [TestClass ()]
@@ -20,10 +22,31 @@ namespace Mvc.Controllers.Tests {
             
         }
 
-        [TestMethod ()]
-        public void ProfilePictureTest () {
+        public static Mock<IPostingProvider> MockPostingProvider() {
+            var mock = new Mock<IPostingProvider> ();
+            return mock;
+        }
 
-            /*var mock = new Mock<IDbContext> ();
+        public static Mock<IAuthProvider> MockAuthProvider() {
+            var mock = new Mock<IAuthProvider> ();
+
+            mock.Setup (x => x.ProfilePicture (It.IsAny<string> ())).Returns<string> (uname => {
+                if (uname == "sampleuser@sampledomain.com") {
+                    return Encoding.ASCII.GetBytes ("match_text");
+                }
+                if (uname == "123@345.com") {
+                    return Encoding.ASCII.GetBytes ("not_important");
+                }
+                return null;
+            });
+
+            return mock;
+        }
+
+
+
+        public static Mock<IDbContext> MockDbContext () {
+            var mock = new Mock<IDbContext> ();
             mock.SetupGet (x => x.Users).Returns (new FakeDbSet<AppUser> {
                 new AppUser {
                     UserName = "sampleuser@sampledomain.com",
@@ -33,8 +56,17 @@ namespace Mvc.Controllers.Tests {
                     UserName = "123@345.com"
                 }
             });
+            return mock;
+        }
 
-            var ctrl = new HomeController (mock.Object);
+        [TestMethod ()]
+        public void ProfilePictureTest () {
+
+            var ctrl = new HomeController (
+                MockPostingProvider ().Object,
+                MockDbContext ().Object,
+                MockAuthProvider ().Object
+            );
             var result = ctrl.ProfilePicture ("sampleuser@sampledomain.com");
 
             Assert.AreEqual (result.GetType (), typeof (FileContentResult));
@@ -47,13 +79,11 @@ namespace Mvc.Controllers.Tests {
             result = ctrl.ProfilePicture ("nonexistent@user.com");
 
             Assert.AreEqual (result.GetType (), typeof (HttpStatusCodeResult));
-            Assert.AreEqual ((result as HttpStatusCodeResult).StatusCode, HttpStatusCode.NotFound);
-            */
-        }
-
-        [TestMethod ()]
-        public void PostTest () {
+            Assert.AreEqual ((result as HttpStatusCodeResult).StatusCode, 404);
 
         }
+
+
+
     }
 }

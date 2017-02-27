@@ -16,7 +16,6 @@ namespace DataAccessLayer.Concrete {
         public static AppUserManager Create(IdentityFactoryOptions<AppUserManager> options, IOwinContext context) {
             var db = context.Get<AppDbContext> ();
             var manager = new AppUserManager (new UserStore<AppUser> (db));
-
             return manager;
         }
 

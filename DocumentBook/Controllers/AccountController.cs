@@ -9,6 +9,7 @@ using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity.Owin;
 using System.Threading.Tasks;
+using System.Reflection;
 
 namespace DocumentBook.Controllers
 {
@@ -19,6 +20,7 @@ namespace DocumentBook.Controllers
         public AccountController (IAuthProvider authProvider) {
             this.AuthProvider = authProvider;
         }
+
 
         public ActionResult Index() {
             return RedirectToAction ("Register");
@@ -37,22 +39,11 @@ namespace DocumentBook.Controllers
             if (!ModelState.IsValid) {
                 return View (model);
             }
-
-            /*byte[] profilePictureBuffer;
-            if (model.ProfilePicture != null) {
-                var File = (model.ProfilePicture as HttpPostedFileBase[])[0];
-                profilePictureBuffer = new byte[File.ContentLength];
-                File.InputStream.Read (profilePictureBuffer, 0, File.ContentLength);
-            } else {
-                profilePictureBuffer = new byte[0];
-            }*/
-
-            // TODO validate File.ContentType
-
             var errors = AuthProvider.Register (model.Email, model.Password, (model.ProfilePicture as HttpPostedFileBase[])[0]);
             foreach(string err in errors) {
                 ModelState.AddModelError ("", err);
             }
+            
             return View ();
         }
 

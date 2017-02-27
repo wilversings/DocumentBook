@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using DocumentBook.Controllers;
 using Model.ViewModels;
 using System.Web.Mvc;
+using System.Web;
 
 namespace Test {
     [TestClass]
@@ -60,7 +61,7 @@ namespace Test {
 
         [TestMethod]
         public void RegisterTest() {
-            /*var mock = new Mock<IAuthProvider> ();
+            var mock = new Mock<IAuthProvider> ();
             mock.Setup (m => m.RegisterAsync (It.IsAny<string> (), It.IsAny<string> (), null)).Returns<string, string> ((x, y) => {
 
                 if (x == "sampleuser@sampledomain.com") 
@@ -73,27 +74,31 @@ namespace Test {
 
             });
             var ctrl = new AccountController (mock.Object);
+            ctrl.ViewData.ModelState.Clear ();
             var vm = new RegisterViewModel {
                 Email = "myusername",
-                Password = "mypassword"
+                Password = "mypassword",
+                ProfilePicture = new HttpPostedFileWrapper[1] { null }
             };
-            var result = ctrl.Register (vm).Result;
-
+            ctrl.ModelState.AddModelError ("email", "Invalid email!");
+            var result = ctrl.Register (vm);
             Assert.AreEqual (result.GetType(), typeof (ViewResult));
 
             // ModelState is valid. This is not correct because `myusername` is not a email address
             // So model validation is not done
             Assert.AreEqual ((result as ViewResult).Model, vm);
 
+            ctrl = new AccountController (mock.Object);
             vm = new RegisterViewModel {
                 Email = "sampleuser@sampledomain.com",
-                Password = "secret"
+                Password = "secret",
+                ProfilePicture = new HttpPostedFileWrapper[1] { null }
             };
-            result = ctrl.Register (vm).Result;
+            result = ctrl.Register (vm);
 
             Assert.AreEqual (result.GetType (), typeof (ViewResult));
             Assert.AreEqual ((result as ViewResult).Model, null);
-            // Can't set Controller.ModelState.IsValid because the setter is private*/
+            // Can't set Controller.ModelState.IsValid because the setter is private
         }
 
     }
